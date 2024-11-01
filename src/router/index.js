@@ -5,34 +5,34 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component:() => import('views/layout/LayoutContainer.vue'),
+      component:() => import('@/views/layout/LayoutContainer.vue'),
       redirect:'/article/manage',
       children:[
         {
           path:'/article/manage',
-          component:()=>import('views/article/ArticleManage.vue')
+          component:()=>import('@/views/article/ArticleManage.vue')
         },
         {
           path:'/article/channel',
-          component:()=>import('views/article/ArticleChannel.vue')
+          component:()=>import('@/views/article/ArticleChannel.vue')
         },
         {
           path:'/user/profile',
-          component:()=>import('views/user/UserProfile.vue')
+          component:()=>import('@/views/user/UserProfile.vue')
         },
         {
           path:'/user/avatar',
-          component:()=>import('views/user/UserAvatar.vue')
+          component:()=>import('@/views/user/UserAvatar.vue')
         },
         {
           path:'/user/password',
-          component:()=>import('views/user/UserPassword.vue')
+          component:()=>import('@/views/user/UserPassword.vue')
         }
       ]
     },
     {
       path: '/login',
-      component:() => import('views/login/LoginPage.vue')
+      component:() => import('@/views/login/LoginPage.vue')
     }
     // {
     //   path: '/about',
@@ -42,7 +42,7 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/AboutView.vue'),
     // },
-  ],
+  ]
 })
 
 export default router
