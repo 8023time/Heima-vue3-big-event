@@ -2,38 +2,37 @@
 <script setup>
 import PageContainer from '@/components/PageContainer.vue'
 import channelselect from './components/channelselect.vue'
-// import { Delete } from '@element-plus/icons-vue/dist/types';
-// import { Edit } from '@element-plus/icons-vue/dist/types';
+import { getarticlelist } from '@/api/article'
+import { settime } from '@/utils/setdate'
 import { ref } from 'vue'
 import {
   Delete,
   Edit
 } from '@element-plus/icons-vue'
-const articledatamessage = ref([
-{
-    id: 5961,
-    title: '新的文章啊',
-    pub_date: '2022-07-10 14:53:52.604',
-    state: '已发布',
-    cate_name: '体育'
-  },
-  {
-    id: 5962,
-    title: '这个不是新的文章啊',
-    pub_date: '2022-07-10 14:54:30.904',
-    state: "未发布",
-    cate_name: '体育'
-  }
-  ])
+const articledatamessage = ref([]) // 在这里记录的就是文章的一些information
+const tatalarticleinformation = ref(0) //这里记录的就是文章的总条数
+const articlerootref = ref({
+    pagenum: 1,  // 这个是当前的页面
+    pagesize: 5, // 这个是当前页面有的最多的条数
+    cate_id:'',
+    state:''
+  })
+
   // 下面的就是一些方法的定义
   const onchangedata = (datamessage) => {
     console.log(datamessage);
-    
   }
   const ondeletedata = (datamessage) => {
     console.log(datamessage);
     
   } 
+  //接下来又是一些新的东西,就是这个定义一个用来收集一些数据的ref响应式地数据地值保存到一个新的ref地响应式地东西里
+const getinformation = async () => {
+  const res = await getarticlelist(articlerootref.value)
+  articledatamessage.value = res.data.data
+  tatalarticleinformation.value = res.data.total
+}
+getinformation()
 </script>
 
 <template>
@@ -44,11 +43,11 @@ const articledatamessage = ref([
     </template>
     <!-- 在这里的是顶部的展示的区域 -->
     <el-form inline>
-      <channelselect></channelselect>
+      <channelselect v-model="articledatamessage.cate_id"></channelselect>
       <el-form-item label="发布状态" style="width: 240px;">
-        <el-select>
-          <el-option>已发布</el-option>
-          <el-option>草稿</el-option>
+        <el-select v-model="articledatamessage.state">
+          <el-option label="已发布" value="已发布">已发布</el-option>
+          <el-option label="草稿" value="草稿">草稿</el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -68,7 +67,9 @@ const articledatamessage = ref([
 
       </el-table-column>
       <el-table-column label="发表时间" prop="pub_date">
-
+        <template #default="{ row }">
+          {{ settime( row.pub_date ) }}
+        </template>
       </el-table-column>
       <el-table-column label="状态" prop="state">
 
