@@ -9,9 +9,8 @@ import { ElMessage } from 'element-plus'
 
 const dialogVisible = ref(false)
 const refdatas = ref()
+const emit =defineEmits(['success'])
 const formtable = ref({
-    cate_name:'',
-    cate_alias:''
 })
 const formrules =ref({
     cate_name:[
@@ -33,24 +32,26 @@ defineExpose({
     onclickaddbutton
 })
  // 接下来的就是提交确认的按钮
- const onsubmit = async (refdatas) => {
+ const onsubmit = async () => {
     await refdatas.value.validate()
-    const iselite = refdatas.value.id
+    const iselite = formtable.value.id
     if(iselite) { // 说明地就是这个是修改文章分类地request地请求
-      await changearticleinformation(refdatas.value)
+      await changearticleinformation(formtable.value)
       ElMessage({
         message: '文章修改成功!',
         type: 'success',
         plain: true,
       })
     } else { // 在这里地话就是指的就是这个添加文章分类地request地请求地一个写法了
-      await addarticleinformation(refdatas.value)
+      await addarticleinformation(formtable.value)
       ElMessage({
       message: '文章添加成功!',
       type: 'success',
       plain: true,
     })
     }
+    dialogVisible.value = false
+    emit('success')
  }
 
 </script>
@@ -74,7 +75,7 @@ defineExpose({
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="onsubmit(refdatas)">
+        <el-button type="primary" @click="onsubmit()">
           确认
         </el-button>
       </div>

@@ -11,6 +11,7 @@ import {
 } from '@element-plus/icons-vue'
 import PageContainer from '@/components/PageContainer.vue'
 import channelinformation from './components/channelinformation.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 // import { addarticleinformation } from '@/api/article'
 // import { changearticleinformation } from '@/api/article'
 // import { deletearticleinformation } from '@/api/article'
@@ -34,19 +35,24 @@ const handleEdit = async ( row ) => {// 在这里的这个是用来执行编辑�
   dialogVisible.value.onclickaddbutton(row)
 }
 const handleDelete = async ( row ) => {// 在这里是用来执行删除的点击事件的
-  await deletearticleinformation(row)
-  
+  await ElMessageBox.confirm('你确认一定要删除这个分类吗?', "警告加上警告!", {
+    confirmButtonText:'别管我!',
+    cancelButtonText:'不删了~',
+    type:'warning'
+  })
+  await deletearticleinformation(row.id)
+  ElMessage.success('真棒,删除成功!')
+  getarticlechannelinfor()
 }
 const onclickaddinformation = async () => {// 在这里的作用就是用来添加文章地信息的事件
   dialogVisible.value.onclickaddbutton({})
 }
-
+const onsuccesschange = () => {
+  getarticlechannelinfor()//这里的话就是直接请求后端数据
+}
 //接下来的就是添加分类的这个方法等等
 const dialogVisible = ref()
 </script>
-
-
-
 
 <template>
 <Page-container title="文章分类">
@@ -93,7 +99,7 @@ const dialogVisible = ref()
     
 </Page-container>
 
-<channelinformation ref="dialogVisible"></channelinformation>
+<channelinformation ref="dialogVisible" @success="onsuccesschange"></channelinformation>
 
 </template>
 

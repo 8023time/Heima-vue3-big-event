@@ -13,6 +13,8 @@ export const addarticleinformation = (data) =>{
     return request.post('/my/cate/add',data)
 }
 //删除文章分类
-export const deletearticleinformation = (data) => {
-    return request.delete('/my/cate/del',data)
+export const deletearticleinformation = (id) => {
+    return request.delete('/my/cate/del',{
+        params: {id}
+    })
 }
