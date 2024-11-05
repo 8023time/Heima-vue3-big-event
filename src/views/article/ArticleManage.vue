@@ -33,6 +33,14 @@ const getinformation = async () => {
   tatalarticleinformation.value = res.data.total
 }
 getinformation()
+
+// 下面定义的就是这个表格下面的分页的设计的部分
+const onSizeChange = () => {
+
+}
+const onCurrentChange = () => { 
+
+}
 </script>
 
 <template>
@@ -82,6 +90,19 @@ getinformation()
         </template>
       </el-table-column>
     </el-table>
+    <!-- 下面就是放的是一些表格的数据的切换的东西小组件 -->
+    <el-pagination
+      v-model:current-page="currentPage4"
+      v-model:page-size="pageSize4"
+      :page-sizes="[5, 7, 9, 11]"
+      :background="true"
+      layout=" jumper, sizes, prev, pager, next, total"
+      :total="20"
+      @size-change="onSizeChange"
+      @current-change="onCurrentChange"
+      style="justify-content: flex-end"
+    />
+
 
     <template #empty>
       <el-empty description="没有没有数据"></el-empty>
