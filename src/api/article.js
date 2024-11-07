@@ -41,14 +41,12 @@ export const deletearticlelistinformation = ( id ) => {
     })
 }
 // 发布文章
-export const putarticlelistinformation = ({ title, cate_id, content, cover_img, state }) => {
-    return request.put('/my/article/add', {
-        params:{ title, cate_id, content, cover_img, state }
+export const putarticlelistinformation = ({title, cate_id, content, cover_img, state}) => {
+    return request.post('/my/article/add', {
+        params:{title, cate_id, content, cover_img, state}
     })
 }
-// 修改文章内容
-export const changearticlelistinformation = ({ title, cate_id, content, cover_img, state }) => {
-    return request('/my/article/info', {
-        params:{ title, cate_id, content, cover_img, state }
-    })
+// 更新文章内容
+export const changearticlelistinformation = (data) => {
+    return request.put('/my/article/info', data)
 }
