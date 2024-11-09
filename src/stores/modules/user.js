@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from 'vue';
 import { getuserinformation } from '@/api/user'
-
 export const UseUserStore = defineStore('big-user',()=>{
     //在这里存的就是这个token的值
     const token = ref('')

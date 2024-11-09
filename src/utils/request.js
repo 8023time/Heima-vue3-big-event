@@ -22,6 +22,44 @@ instance.interceptors.request.use(
   },
   (err) => Promise.reject(err)
 ) 
+
+
+
+// //响应拦截器
+// instance.interceptors.response.use(
+//   (res) => {
+//     // 处理业务失败和提取核心响应数据
+//     if (res.data.code === 0) { 
+//       return res;
+//     }
+//     ElMessage.error(res.data.message || "服务异常!!!");
+//     return Promise.reject(res);
+//   },
+//   (err) => {
+//     // 确保 err.response 存在，并显示适当的错误信息
+//     const errorMessage = err?.response?.data?.message || "服务异常!";
+//     ElMessage.error(errorMessage);
+
+//     // 处理 401 错误，跳转到登录页
+//     if (err.response && err.response.status === 401) { 
+//       const userstore = UseUserStore();
+//       userstore.token = null; // 清除过期的 token
+//       ElMessage.error("登录已过期，请重新登录");
+//       router.push('/login');
+//     } else if (!err.response) {
+//       // 网络错误或没有响应的情况
+//       ElMessage.error("请求失败，请检查网络连接");
+//     }
+
+//     return Promise.reject(err);
+//   }
+// );
+
+
+
+
+
+
 //响应拦截器
 instance.interceptors.response.use(
   (res) => {
